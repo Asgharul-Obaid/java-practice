@@ -1,0 +1,41 @@
+package Test;
+
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Scanner;
+
+class DataB
+{
+    public static void main(String a[])
+    {
+        String url = "jdbc:mysql://localhost:3306/file";
+        String user = "root";
+        String pass = "root";
+        Scanner k = new Scanner(System.in);
+        System.out.println("enter name");
+        String name = k.next();
+        System.out.println("enter roll no");
+        int roll = k.nextInt();
+        System.out.println("enter class");
+        String cls =  k.next();
+        String sql = "insert into student1 values('"+name+"',"+roll+",'"+cls+"')";
+        Connection con=null;
+        try
+        {
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            con = DriverManager.getConnection(url,user,pass);
+            Statement st = (Statement) con.createStatement();
+            int m = ((java.sql.Statement) st).executeUpdate(sql);
+            if (m == 1)
+                System.out.println("inserted successfully : "+sql);
+            else
+                System.out.println("insertion failed");
+            con.close();
+        }
+        catch(Exception e)
+        {
+            System.err.println(e);
+        }
+    }
+}
